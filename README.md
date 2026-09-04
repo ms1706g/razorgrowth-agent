@@ -8,6 +8,18 @@ Unlike traditional analytics dashboards that primarily explain historical perfor
 
 ---
 
+## 🚀 Live Demo
+
+**Live API:** https://razorgrowth-agent.onrender.com
+
+**Interactive API Docs:** https://razorgrowth-agent.onrender.com/docs
+
+**GitHub:** https://github.com/ms1706g/razorgrowth-agent
+
+> The deployed API has been verified end-to-end, including merchant analysis, growth opportunity detection, and the RazorGrowth agent workflow.
+
+---
+
 ## Overview
 
 Merchants generate significant amounts of transaction data, but raw analytics alone do not answer the most important business question:
@@ -291,7 +303,7 @@ Make sure the following are installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/ms1706g/razorgrowth-agent.git
 cd razorgrowth-agent
 ```
 
@@ -349,6 +361,10 @@ Once the server is running, open:
 ```text
 http://127.0.0.1:8000/docs
 ```
+
+The deployed API documentation is also available at:
+
+https://razorgrowth-agent.onrender.com/docs
 
 The Swagger interface allows you to:
 
@@ -713,6 +729,7 @@ RazorGrowth brings these layers together to transform merchant transaction data 
 - [x] Swagger documentation
 - [x] Automated tests
 - [x] Project documentation
+- [x] Production deployment
 
 ### Planned
 
@@ -722,16 +739,54 @@ RazorGrowth brings these layers together to transform merchant transaction data 
 - [ ] Advanced customer segmentation
 - [ ] Campaign execution
 - [ ] Conversion tracking
-- [ ] Production deployment
 - [ ] Closed-loop growth optimization
 
 ---
 
-## 🚀 Live Demo
+## Final Verification Checklist
 
-**API:** https://razorgrowth-agent.onrender.com
+Before submitting or sharing the repository, verify the following:
 
-**Interactive API Docs:** https://razorgrowth-agent.onrender.com/docs
+- [ ] README contains the live API URL
+- [ ] README contains the interactive API documentation URL
+- [ ] README contains the GitHub repository URL
+- [ ] Production deployment is marked as completed
+- [ ] `.env` is included in `.gitignore`
+- [ ] No real API credentials are committed
+- [ ] FastAPI server starts successfully
+- [ ] `/health` responds successfully
+- [ ] `/merchant/analyze` works
+- [ ] `/merchant/opportunity` works
+- [ ] `/agent/analyze` works
+- [ ] Automated tests pass
+- [ ] Git working tree is clean
+- [ ] Latest changes are pushed to GitHub
+
+---
+
+## GitHub Finalization
+
+After updating the README, run:
+
+```powershell
+git add README.md
+git commit -m "Polish README with live demo"
+git push
+```
+
+Then verify the repository status:
+
+```powershell
+git status
+```
+
+The expected result is:
+
+```text
+nothing to commit, working tree clean
+```
+
+---
 
 ## Conclusion
 
