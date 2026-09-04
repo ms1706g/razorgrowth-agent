@@ -499,7 +499,7 @@ python -m pytest -v
 Current verification:
 
 ```text
-2 passed
+5 passed
 ```
 
 ### 6. Start the API
@@ -799,7 +799,7 @@ Transform merchant transaction data into actionable, controlled, agent-driven gr
 The core project has been locally verified with:
 
 ```text
-2 passed
+5 passed
 ```
 
 The API application has also been verified to:
