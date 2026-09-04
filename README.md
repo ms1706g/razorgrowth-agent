@@ -764,27 +764,6 @@ Before submitting or sharing the repository, verify the following:
 
 ---
 
-## GitHub Finalization
-
-After updating the README, run:
-
-```powershell
-git add README.md
-git commit -m "Polish README with live demo"
-git push
-```
-
-Then verify the repository status:
-
-```powershell
-git status
-```
-
-The expected result is:
-
-```text
-nothing to commit, working tree clean
-```
 
 ---
 
