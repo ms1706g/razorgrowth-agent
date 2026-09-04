@@ -673,11 +673,10 @@ Agentic Recommendation
 Next Best Action
 
 
-The next stage is to connect these recommendations to real-world execution and measurable outcomes, creating a merchant growth engine that can continuously detect, recommend, execute, and learn.
+The next stage is to connect these recommendations to real-world execution and measurable outcomes, creating a merchant growth engine that can continuously **detect, recommend, execute, and learn**.
 
-<br> <div align="center">
-🚀 RazorGrowth
+---
 
-Turning merchant data into the next best action.
+## 🚀 RazorGrowth
 
-</div>
+> **Turning merchant data into the next best action.**
