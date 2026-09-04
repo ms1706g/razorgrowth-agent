@@ -54,44 +54,106 @@ def analyze_merchant():
     }
 
 
-def find_growth_opportunity():
+def find_growth_opportunities():
+    """
+    Return all viable cross-sell opportunities so the agent
+    can compare them and choose the strongest one.
+    """
+
     connection = get_connection()
 
-    eligible_customers = connection.execute(
+    products = connection.execute(
         """
-        SELECT DISTINCT c.id, c.name, c.email
-        FROM customers c
-        JOIN orders o ON o.customer_id = c.id
-        WHERE o.product_id = 1
-          AND c.id NOT IN (
-              SELECT customer_id
-              FROM orders
-              WHERE product_id = 2
-          )
+        SELECT
+            p.id,
+            p.name,
+            p.price,
+            COUNT(o.id) AS order_count,
+            COALESCE(SUM(o.amount), 0) AS revenue
+        FROM products p
+        LEFT JOIN orders o ON o.product_id = p.id
+        GROUP BY p.id
+        ORDER BY revenue DESC
         """
     ).fetchall()
 
-    product = connection.execute(
-        """
-        SELECT name, price
-        FROM products
-        WHERE id = 2
-        """
-    ).fetchone()
+    if len(products) < 2:
+        connection.close()
+        return []
+
+    anchor_product = products[0]
+    opportunities = []
+
+    for candidate in products[1:]:
+        eligible_customers = connection.execute(
+            """
+            SELECT DISTINCT c.id
+            FROM customers c
+            JOIN orders anchor_order
+                ON anchor_order.customer_id = c.id
+            WHERE anchor_order.product_id = ?
+              AND c.id NOT IN (
+                  SELECT customer_id
+                  FROM orders
+                  WHERE product_id = ?
+              )
+            """,
+            (anchor_product["id"], candidate["id"]),
+        ).fetchall()
+
+        eligible_count = len(eligible_customers)
+
+        if eligible_count <= 0:
+            continue
+
+        revenue_potential = eligible_count * candidate["price"]
+
+        opportunities.append(
+            {
+                "opportunity_type": "cross_sell",
+                "anchor_product": anchor_product["name"],
+                "target_product": candidate["name"],
+                "target_product_price": candidate["price"],
+                "eligible_customer_count": eligible_count,
+                "eligible_customer_ids": [
+                    row["id"] for row in eligible_customers
+                ],
+                "revenue_potential": round(revenue_potential, 2),
+                "recommended_action": "create_payment_link",
+                "reason": (
+                    f"{eligible_count} customers purchased "
+                    f"{anchor_product['name']} but have not purchased "
+                    f"{candidate['name']}."
+                ),
+            }
+        )
 
     connection.close()
 
-    customer_ids = [row["id"] for row in eligible_customers]
+    return opportunities
 
-    return {
-        "opportunity_type": "cross_sell",
-        "target_product": product["name"],
-        "target_product_price": product["price"],
-        "eligible_customer_count": len(customer_ids),
-        "eligible_customer_ids": customer_ids,
-        "reason": (
-            f"{len(customer_ids)} customers purchased Pro Analytics "
-            f"but have not purchased {product['name']}."
-        ),
-        "recommended_action": "create_payment_link",
-    }
+
+def find_growth_opportunity():
+    """
+    Keep the existing API contract by returning the
+    highest-revenue opportunity.
+    """
+
+    opportunities = find_growth_opportunities()
+
+    if not opportunities:
+        return {
+            "opportunity_type": "none",
+            "target_product": None,
+            "target_product_price": None,
+            "eligible_customer_count": 0,
+            "eligible_customer_ids": [],
+            "reason": "No viable cross-sell opportunity found.",
+            "recommended_action": None,
+            "revenue_potential": 0,
+        }
+
+    return max(
+        opportunities,
+        key=lambda opportunity: opportunity["revenue_potential"],
+    )
