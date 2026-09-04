@@ -675,4 +675,4 @@ Next Best Action
 
 The next stage is to connect these recommendations to real-world execution and measurable outcomes, creating a merchant growth engine that can continuously detect, recommend, execute, and learn.
 
-<p align="center"> <strong>RazorGrowth</strong><br> <em>Turning merchant data into the next best action.</em> </p> ```
+<p align="center"> <strong>RazorGrowth</strong><br> <em>Turning merchant data into the next best action.</em> </p>
