@@ -677,6 +677,5 @@ The next stage is to connect these recommendations to real-world execution and m
 
 ---
 
-## 🚀 RazorGrowth
-
-> **Turning merchant data into the next best action.**
+🚀 RazorGrowth
+Turning merchant data into the next best action.
